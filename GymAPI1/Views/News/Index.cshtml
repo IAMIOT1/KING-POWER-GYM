@@ -1,0 +1,154 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<section class="News1 text-white">
+    <div>
+        <div class="row align-items-center">
+
+            
+
+            <div class="container">
+            </div>
+
+        </div>
+    </div>
+</section>
+<section id="News" class="news-banner">
+    <h1>TIN TỨC</h1>
+</section>
+
+<div class="news-filter">
+
+    <<div class="news-category">
+
+        <span class="tab active" onclick="filterNews(this,'all')">TẤT CẢ</span>
+        <span class="tab" onclick="filterNews(this,'story')">CÂU CHUYỆN CITIGYM</span>
+        <span class="tab" onclick="filterNews(this,'training')">TIN TẬP LUYỆN</span>
+        <span class="tab" onclick="filterNews(this,'promo')">KHUYẾN MÃI</span>
+        <span class="tab" onclick="filterNews(this,'nutrition')">DINH DƯỠNG</span>
+
+    </div>
+
+    <script>
+
+            function filterNews(element,category){
+
+            // đổi màu tab
+            let tabs = document.querySelectorAll(".tab");
+            tabs.forEach(t => t.classList.remove("active"));
+            element.classList.add("active");
+
+            // lọc bài viết
+            let posts = document.querySelectorAll(".news-card");
+
+            posts.forEach(post => {
+
+            if(category === "all"){
+            post.style.display="block";
+            }
+            else if(post.classList.contains(category)){
+            post.style.display="block";
+            }
+            else{
+            post.style.display="none";
+            }
+
+            });
+
+            }
+
+    </script>
+    <div class="search-box">
+
+        <input type="text" placeholder="Tìm kiếm...">
+
+    </div>
+
+</div>
+
+<div class="news-grid">
+
+    <div id="blog1"class="news-card">
+
+        <img src="/images/Thuc-an-dinh-duong.jpg">
+
+        <div class="news-content">
+
+            <span class="tag">BLOG</span>
+
+            <h3>PHÂN BIỆT TINH BỘT NHANH VÀ TINH BỘT CHẬM: NÊN ĂN LOẠI NÀO KHI TẬP GYM?</h3>
+            <p>
+            12-12-2025
+            </p>
+            <p>
+                
+                Tinh bột là nguồn năng lượng quan trọng giúp cơ thể duy trì sức bền và hiệu suất trong quá trình tập luyện. Tuy nhiên, không phải loại tinh bột nào cũng giống nhau. Việc hiểu rõ sự khác biệt giữa tinh bột nhanh và tinh bột chậm sẽ giúp bạn xây dựng chế độ ăn phù hợp hơn.
+
+                Tinh bột nhanh thường có trong các thực phẩm như bánh mì trắng, nước ngọt hoặc đồ ngọt, giúp cung cấp năng lượng nhanh nhưng dễ làm tăng đường huyết. Trong khi đó, tinh bột chậm có trong gạo lứt, khoai lang, yến mạch… giúp giải phóng năng lượng từ từ và duy trì cảm giác no lâu.
+
+                Đối với người tập gym, việc lựa chọn đúng loại tinh bột và thời điểm ăn phù hợp sẽ giúp tăng hiệu quả tập luyện, hỗ trợ phát triển cơ bắp và kiểm soát cân nặng tốt hơn
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="news-card">
+
+        <img src="/images/Nâng-cap-phong.jpg">
+
+        <div class="news-content">
+
+            <span class="tag">BLOG</span>
+
+            <h3>NÂNG CẤP VÀ CẢI TIẾN PHÒNG TẬP: TRẢI NGHIỆM TẬP LUYỆN HIỆN ĐẠI HƠN</h3>
+
+            <p>
+                15-03-2026
+            </p>
+            <p>
+
+                Nhằm mang đến trải nghiệm tốt hơn cho hội viên, King Power Gym đã tiến hành nâng cấp và cải tiến nhiều khu vực trong phòng tập. Các trang thiết bị tập luyện được bổ sung và sắp xếp lại khoa học, giúp không gian tập trở nên rộng rãi và thuận tiện hơn.
+
+                Bên cạnh đó, khu vực tập tạ và khu cardio cũng được cải thiện để đáp ứng nhu cầu luyện tập ngày càng cao của hội viên. Với những thay đổi này, King Power Gym mong muốn mang đến môi trường tập luyện hiện đại, năng động và hiệu quả hơn cho tất cả mọi người.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="news-card">
+
+        <img src="/images/KPG.jpg">
+
+        <div class="news-content">
+
+            <span class="tag">BLOG</span>
+
+            <h3>TẬP TẠI KING POWER GYM BAO NHIÊU 1 THÁNG? TÍNH TOÁN CHI PHÍ TẬP GYM THÔNG MINH</h3>
+            <p>20-03-2026</p>
+            <p>
+                
+
+                Chi phí tập tại King Power Gym thường dao động từ khoảng 300.000đ – 700.000đ mỗi tháng, tùy vào gói tập và thời gian đăng ký. Nếu lựa chọn các gói dài hạn như 6 tháng hoặc 12 tháng, mức phí trung bình mỗi tháng sẽ tiết kiệm hơn đáng kể.
+
+                Việc lựa chọn gói tập phù hợp không chỉ giúp tối ưu chi phí mà còn tạo động lực duy trì thói quen luyện tập lâu dài. Với mức giá hợp lý cùng môi trường tập luyện hiện đại, King Power Gym là lựa chọn phù hợp cho những ai muốn cải thiện sức khỏe và vóc dáng. 💪
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="pagination">
+
+    <a class="active">1</a>
+    <a>2</a>
+    <a>3</a>
+    <a>4</a>
+
+</div>

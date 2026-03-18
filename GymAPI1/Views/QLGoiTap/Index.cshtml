@@ -1,0 +1,43 @@
+﻿@model IEnumerable<GymAPI1.Models.Package>
+@{
+    Layout = "_Layout";
+}
+
+<div class="gym-form-wrapper">
+    <div class="gym-card" style="max-width: 950px;">
+        <div class="gym-card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin:0;">DANH SÁCH GÓI TẬP</h3>
+            <a asp-action="Create" class="gym-btn gym-btn-primary" style="text-decoration:none;">+ THÊM MỚI</a>
+        </div>
+        <div class="gym-card-body">
+            <table class="gym-table" style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #eee;">
+                        <th style="padding:12px; text-align:left;">ID</th>
+                        <th style="padding:12px; text-align:left;">Tên Gói</th>
+                        <th style="padding:12px; text-align:left;">Thời hạn</th>
+                        <th style="padding:12px; text-align:left;">Giá Tiền</th>
+                        <th style="padding:12px; text-align:center;">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding:12px;">@item.PackageID</td>
+                            <td style="padding:12px;"><strong>@item.PackageName</strong></td>
+                            <td style="padding:12px;">@item.Duration</td>
+                            <td style="padding:12px;">@item.Price.ToString("N0") VNĐ</td>
+                            <td style="padding:12px; text-align:center;">
+                                <a asp-action="Edit" asp-route-id="@item.PackageID" style="color:#007bff; text-decoration:none;">Sửa</a> |
+                                <a asp-action="Delete" asp-route-id="@item.PackageID" style="color:#d32f2f; text-decoration:none;" onclick="return confirm('Xóa gói tập này?')">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts { }

@@ -1,0 +1,46 @@
+﻿@model GymAPI1.Models.Package
+@{
+    bool isEdit = Model != null && Model.PackageID > 0;
+    Layout = "_Layout";
+}
+
+<div class="gym-form-wrapper">
+    <div class="gym-card">
+        <div class="gym-card-header">
+            <h3>@(isEdit ? "CẬP NHẬT GÓI TẬP" : "THÊM GÓI TẬP MỚI")</h3>
+        </div>
+        <div class="gym-card-body">
+            <form asp-action="@(isEdit ? "Edit" : "Create")" method="post">
+                @if (isEdit)
+                {
+                    <input type="hidden" asp-for="PackageID" />
+                }
+
+                <div class="gym-form-group">
+                    <label>Tên Gói Tập</label>
+                    <input asp-for="PackageName" class="gym-control" required />
+                </div>
+
+                <div class="gym-form-group">
+                    <label>Thời hạn (Ngày/Tháng)</label>
+                    @* Sửa từ DurationMonths thành Duration cho khớp Database *@
+                    <input asp-for="Duration" class="gym-control" type="number" required />
+                </div>
+
+                <div class="gym-form-group">
+                    <label>Giá Tiền (VNĐ)</label>
+                    <input asp-for="Price" class="gym-control" type="number" required />
+                </div>
+
+                @* Bỏ phần Description vì Database của bạn không có cột này *@
+
+                <div class="gym-form-actions">
+                    <button type="submit" class="gym-btn gym-btn-primary">LƯU GÓI TẬP</button>
+                    <a asp-action="Index" class="gym-btn gym-btn-secondary">Hủy bỏ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts { }

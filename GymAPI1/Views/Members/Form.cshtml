@@ -1,0 +1,56 @@
+﻿@model GymAPI1.Models.Member
+
+@{
+    Layout = "_Layout";
+    bool isEdit = Model != null && Model.MemberID > 0;
+    ViewBag.Title = isEdit ? "Cập Nhật Hội Viên" : "Thêm Hội Viên Mới";
+    string actionName = isEdit ? "Edit" : "Create";
+}
+
+<div class="gym-form-wrapper">
+    <div class="gym-card">
+        <div class="gym-card-header">
+            <h3>@ViewBag.Title</h3>
+        </div>
+        <div class="gym-card-body">
+            <form asp-action="@actionName" method="post">
+                @Html.AntiForgeryToken()
+
+                @if (isEdit)
+                {
+                    <input type="hidden" asp-for="MemberID" />
+                    <input type="hidden" asp-for="JoinDate" />
+                }
+
+                <div class="gym-form-group">
+                    <label>Họ và Tên</label>
+                    <input asp-for="FullName" class="gym-control" required />
+                </div>
+
+                <div class="gym-form-group">
+                    <label>Số điện thoại</label>
+                    <input asp-for="Phone" class="gym-control" required />
+                </div>
+
+                <div class="gym-form-group">
+                    <label>Email</label>
+                    <input asp-for="Email" class="gym-control" type="email" />
+                </div>
+
+                <div class="gym-form-group">
+                    <label>ID Gói tập</label>
+                    <input asp-for="PackageID" class="gym-control" type="number" required />
+                </div>
+
+                <div class="gym-form-actions">
+                    <button type="submit" class="gym-btn gym-btn-primary">Lưu Hội Viên</button>
+                    <a asp-action="Index" class="gym-btn gym-btn-secondary">Quay lại danh sách</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

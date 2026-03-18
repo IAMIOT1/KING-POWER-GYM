@@ -1,0 +1,424 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<section class="Price1 text-white">
+    <div>
+        <div class="row align-items-center">
+
+            
+
+            <div class="container">
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="price-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- LEFT -->
+            <div class="col-md-6">
+
+                <!-- MENU -->
+                <div class="package-menu">
+                    <span class="tab active" onclick="changePackage(this,'classic')">CLASSIC</span>
+                    <span class="tab" onclick="changePackage(this,'classicplus')">CLASSIC-PLUS</span>
+                    <span class="tab" onclick="changePackage(this,'passport')">KING POWER GYM PASSPORT</span>
+                    <span class="tab" onclick="changePackage(this,'royal')">KING POWER GYM ROYAL</span>
+                    <span class="tab" onclick="changePackage(this,'premium')">KING POWER GYM PREMIUM</span>
+                    <span class="tab" onclick="changePackage(this,'signature')">SIGNATURE</span>
+                </div>
+
+                <!-- WRAP -->
+                <div class="duration-wrapper">
+
+                    <!-- LỊCH -->
+                    <div class="duration-grid">
+                        <div class="duration big active" onclick="changeDuration(this,24)">24<br><span>THÁNG</span></div>
+                        <div class="duration" onclick="changeDuration(this,12)">12<br><span>THÁNG</span></div>
+                        <div class="duration" onclick="changeDuration(this,6)">6<br><span>THÁNG</span></div>
+                        <div class="duration" onclick="changeDuration(this,3)">3<br><span>THÁNG</span></div>
+                        <div class="duration full" onclick="changeDuration(this,1)">1<br><span>THÁNG</span></div>
+                    </div>
+
+                    <!-- LINE -->
+                    <div class="line"></div>
+
+                    <!-- GIÁ -->
+                    <div class="price-detail">
+                        <p>Thời gian: <b id="duration">24 THÁNG</b></p>
+                        <p>Tổng: <b id="total">15,370,000 VND</b></p>
+                        <p>Tháng: <b id="month">640,417 VND</b></p>
+                        <p>Ngày: <b id="day">21,347 VND</b></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="col-md-6 text-center">
+                <img src="/images/chay.png" class="img-fluid img-box">
+            </div>
+
+        </div>
+    </div>
+</section>
+<script>
+
+    const packages = {
+
+    classic:{
+    total:"15,370,000 VND",
+    month:"640,417 VND",
+    day:"21,347 VND"
+    },
+
+    classicplus:{
+    total:"18,440,000 VND",
+    month:"768,333 VND",
+    day:"25,611 VND"
+    },
+
+    passport:{
+    total:"19,970,000 VND",
+    month:"832,083 VND",
+    day:"27,736 VND"
+    },
+
+    royal:{
+    total:"23,060,000 VND",
+    month:"960,833 VND",
+    day:"32,028 VND"
+    },
+
+    premium:{
+    total:"19,970,000 VND",
+    month:"832,083 VND",
+    day:"27,736 VND"
+    },
+
+    signature:{
+    total:"86,550,000 VND",
+    month:"3,606,250 VND",
+    day:"120,208 VND"
+    }
+
+    };
+
+
+    function changePackage(element,name){
+
+    // đổi màu tab
+    let tabs = document.querySelectorAll(".tab");
+
+    tabs.forEach(t => t.classList.remove("active"));
+
+    element.classList.add("active");
+
+
+    // đổi giá
+    document.getElementById("total").innerText = packages[name].total;
+    document.getElementById("month").innerText = packages[name].month;
+    document.getElementById("day").innerText = packages[name].day;
+
+    }
+
+</script>
+
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function(){
+
+    let currentPackage = "classic";
+    let currentDuration = 24;
+
+    const packages = {
+        classic: { total:15370000 },
+        classicplus: { total:18440000 },
+        passport: { total:19970000 },
+        royal: { total:23060000 },
+        premium: { total:19970000 },
+        signature: { total:86550000 }
+    };
+
+    // CLICK GÓI
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function(){
+
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            currentPackage = this.getAttribute("onclick").match(/'(.*?)'/)[1];
+            updatePrice();
+        });
+    });
+
+    // CLICK THÁNG
+    document.querySelectorAll('.duration').forEach(d => {
+        d.addEventListener('click', function(){
+
+            document.querySelectorAll('.duration').forEach(x => x.classList.remove('active'));
+            this.classList.add('active');
+
+            currentDuration = parseInt(this.innerText);
+            updatePrice();
+        });
+    });
+
+    // FORMAT
+    function format(n){
+        return n.toLocaleString('vi-VN') + " VND";
+    }
+
+    // UPDATE
+    function updatePrice(){
+        let total = packages[currentPackage].total;
+        let month = total / currentDuration;
+        let day = month / 30;
+
+        document.getElementById("duration").innerText = currentDuration + " THÁNG";
+        document.getElementById("total").innerText = format(total);
+        document.getElementById("month").innerText = format(Math.round(month));
+        document.getElementById("day").innerText = format(Math.round(day));
+    }
+
+    updatePrice();
+
+    });
+
+</script>
+<section class="price-page">
+
+    <h2 class="title">CHÍNH SÁCH GIÁ</h2>
+
+    <table class="price-table">
+
+        <tr>
+            <th>QUYỀN LỢI</th>
+            <th>Classic</th>
+            <th>Classic+</th>
+            <th>CitiPassport</th>
+            <th>CitiRoyal</th>
+            <th>Citi Premium</th>
+            <th>Signature</th>
+        </tr>
+
+        <tr>
+            <td>Tập luyện tại 01 CLB đã chọn</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Yoga & Group X tại CLB đã chọn</td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Không giới hạn thời gian luyện tập</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Tập luyện tại tất cả CLB KING POWER GYM</td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Tất cả lớp Yoga & GroupX toàn hệ thống</td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Đánh giá thể lực với HLV cá nhân</td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Sauna & Steambath</td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Nước uống miễn phí</td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>02 khăn mỗi ngày</td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Smart Locker & FaceID</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Dẫn 1 người thân đi tập</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Quyền lợi dẫn khách</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Bộ dụng cụ tắm gội</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Nước uống dinh dưỡng</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Tủ khóa VIP</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Chuyển nhượng thẻ</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Ưu tiên đặt lớp 48h</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Tặng gói tập HLV</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>VIP Lounge</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Ưu tiên check-in</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+        </tr>
+
+        <tr>
+            <td>Giữ xe miễn phí</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+
+    </table>
+
+</section>

@@ -1,0 +1,36 @@
+﻿@model GymAPI1.Models.Member
+
+@{
+    ViewData["Title"] = "Cập nhật thông tin";
+}
+
+<div class="container mt-4">
+    <h2>Chỉnh sửa thông tin cá nhân</h2>
+    <hr />
+
+    <form asp-controller="Profile" asp-action="UpdateInfo" method="post">
+        @Html.AntiForgeryToken()
+        
+        <input type="hidden" asp-for="MemberID" />
+
+        <div class="mb-3">
+            <label class="form-label">Họ và Tên</label>
+            <input asp-for="FullName" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Số điện thoại</label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </form>
+</div>

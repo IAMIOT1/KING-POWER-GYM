@@ -1,0 +1,34 @@
+﻿@model GymAPI1.Models.Member
+
+<div class="profile-container">
+    <div class="profile-card">
+
+        <div class="profile-header text-center">
+            <img src="~/images/avatar.png" class="profile-avatar" />
+            <h3 class="profile-name">@Model.FullName</h3>
+            <p class="profile-email">@Model.Email</p>
+        </div>
+
+        <div class="profile-info">
+            <p><b>📞 SĐT:</b> @Model.Phone</p>
+            <p><b>🏋️ Gói tập:</b> @(Model.Package?.PackageName ?? "Chưa đăng ký")</p>
+        </div>
+
+        <div class="profile-actions">
+            <a asp-controller="Profile" asp-action="Edit" class="btn btn-danger">
+                Cập nhật thông tin
+            </a>
+
+            <a asp-controller="Profile" asp-action="ChangePassword" class="btn btn-outline-main">
+                Đổi mật khẩu
+            </a>
+
+            <form asp-controller="Auth" asp-action="Logout" method="post">
+                <button type="submit" class="btn btn-logout">
+                    Đăng xuất
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>

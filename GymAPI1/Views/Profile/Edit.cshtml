@@ -1,0 +1,47 @@
+﻿@model GymAPI1.Models.Member
+@{
+    Layout = "_Layout";
+}
+
+<div class="edit-container">
+    <div class="edit-card">
+        
+        <div class="edit-header">
+            <h3>CHỈNH SỬA HỒ SƠ</h3>
+        </div>
+
+        <div class="edit-body">
+            <form asp-controller="Profile" asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="MemberID" />
+
+                <div class="form-group mb-3">
+                    <label class="fw-bold">Họ và tên</label>
+                    <input asp-for="FullName" class="form-control input-custom" placeholder="Nhập họ tên..." />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="fw-bold">Số điện thoại</label>
+                    <input asp-for="Phone" class="form-control input-custom" placeholder="Nhập SĐT..." />
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="fw-bold">Email</label>
+                    <input asp-for="Email" class="form-control input-custom" placeholder="Nhập email..." />
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-save">
+                        LƯU THAY ĐỔI
+                    </button>
+
+                    <a asp-action="Index" class="btn btn-cancel">
+                        HỦY BỎ
+                    </a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

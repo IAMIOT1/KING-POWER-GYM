@@ -1,0 +1,401 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var role = Context.Session.GetString("role");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <a asp-controller="Home" asp-action="Index" class="logo">
+            KING POWER GYM
+        </a>
+
+        <ul class="menu">
+            <li><a href="/Club">CLB</a></li>
+            <li><a href="/Services">DỊCH VỤ</a></li>
+            <li><a href="/Price">CHÍNH SÁCH GIÁ</a></li>
+            <li><a href="/News">TIN TỨC</a></li>
+            <li><a href="/Rewards">CITIREWARDS</a></li>
+
+            @if (role == "Admin")
+            {
+                <li><a href="/Members">QUẢN LÝ HỘI VIÊN</a></li>
+                <li><a href="/QLGoiTap">GÓI TẬP</a></li>
+                <li><a href="/Thongke">THỐNG KÊ</a></li>
+            }
+        </ul>
+
+        <div class="login-area">
+
+            @if (Context.Session.GetString("User") == null)
+            {
+                <button onclick="openLogin()" class="login-btn">Login</button>
+            }
+            else
+            {
+                <button onclick="openProfile()" class="login-btn">
+                    Xin chào @Context.Session.GetString("User")
+                </button>
+            }
+
+        </div>
+
+    </nav>
+
+
+    <!-- LOGIN POPUP -->
+    <div id="loginModal" class="login-modal">
+
+        <div class="login-box">
+
+            <span onclick="closeLogin()" class="close">×</span>
+            @if (TempData["Error"] != null)
+            {
+                <div style="color:red; font-weight:bold;">
+                    @TempData["Error"]
+                </div>
+            }
+
+            @if (TempData["Success"] != null)
+            {
+                <div style="color:green; font-weight:bold;">
+                    @TempData["Success"]
+                </div>
+            }
+
+            <!-- LOGIN FORM -->
+            <div id="loginForm">
+
+                <h2>Đăng nhập</h2>
+
+                <form method="post" action="/Auth/Login">
+
+                    <input type="text" name="username" placeholder="Email hoặc SĐT" required>
+
+                    <input type="password" name="password" placeholder="Mật khẩu" required>
+
+                    <button type="submit" class="login-submit">Đăng nhập</button>
+
+                </form>
+
+
+                <p class="switch-text">
+                    Chưa có tài khoản?
+                    <a href="#" onclick="showRegister()">Tạo tài khoản mới</a>
+                </p>
+
+            </div>
+
+
+            <!-- REGISTER FORM -->
+            <div id="registerForm" style="display:none;">
+
+                <h2>Tạo tài khoản</h2>
+
+                <form method="post" action="/Auth/Register">
+
+                    <input type="text" name="username" placeholder="Email hoặc SĐT" required>
+
+                    <input type="password" name="password" placeholder="Mật khẩu" required>
+
+                    <input type="password" name="confirm" placeholder="Nhập lại mật khẩu" required>
+
+                    <button type="submit" class="login-submit">Tạo tài khoản</button>
+
+                </form>
+
+                <p class="switch-text">
+                    Đã có tài khoản?
+                    <a href="#" onclick="showLogin()">Đăng nhập</a>
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- PROFILE POPUP -->
+    <div id="profileModal" class="profile-modal" style="display:none;">
+        <div class="profile-box">
+            <span onclick="closeProfile()" class="close">×</span>
+            <img src="/images/default-user.png" class="avatar" id="avatarPreview">
+            <h3>@Context.Session.GetString("User")</h3>
+            <input type="file" id="uploadAvatar">
+
+            <div class="profile-menu">
+                <div class="menu-item active" onclick="showTab('thong-tin',this)">
+                    <span>👤</span>
+                    <p>Thông tin</p>
+                </div>
+                <div class="menu-item" onclick="showTab('schedule',this)">
+                    <span>📅</span>
+                    <p>Lịch tập</p>
+                </div>
+                <div class="menu-item" onclick="showTab('payment',this)">
+                    <span>💳</span>
+                    <p>Giao dịch</p>
+                </div>
+                <div class="menu-item" onclick="showTab('rewards',this)">
+                    <span>🎁</span>
+                    <p>Rewards</p>
+                </div>
+            </div>
+
+            <div id="thong-tin" class="tab-content active">
+                <p><b>Tên:</b> <span id="p-name"></span></p>
+                <p><b>SĐT:</b> <span id="p-phone"></span></p>
+                <p><b>Email:</b> <span id="p-email"></span></p>
+                <p><b>Gói tập:</b> <span id="p-package"></span></p>
+
+                <div class="d-flex flex-column gap-2 mt-3">
+                    <a href="/Profile/Edit" class="btn-red" style="text-decoration:none; display:block; text-align:center; margin-bottom:5px;">
+                        Cập nhật thông tin
+                    </a>
+                    <a asp-controller="Profile" asp-action="ChangePassword" class="btn-red" style="text-decoration:none; display:block; text-align:center; background:#555;">
+                        Đổi mật khẩu
+                    </a>
+                </div>
+            </div>
+
+            <!-- LỊCH TẬP -->
+            <div id="schedule" class="tab-content">
+
+                <table width="100%">
+                    <tr>
+                        <th>Ngày</th>
+                        <th>Giờ</th>
+                        <th>HLV</th>
+                    </tr>
+
+                    <tr>
+                        <td>20/03</td>
+                        <td>07:00</td>
+                        <td>Trainer 1</td>
+                    </tr>
+
+                    <tr>
+                        <td>22/03</td>
+                        <td>18:00</td>
+                        <td>Trainer 3</td>
+                    </tr>
+
+                </table>
+
+                <button class="btn-red">Sắp xếp lịch tập</button>
+
+            </div>
+
+            <!-- GIAO DỊCH -->
+            <div id="payment" class="tab-content">
+
+                <table width="100%">
+
+                    <tr>
+                        <th>Ngày</th>
+                        <th>Gói tập</th>
+                        <th>Số tiền</th>
+                    </tr>
+
+                    <tr>
+                        <td>10/03</td>
+                        <td>Gói tập 3</td>
+                        <td>1.500.000</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <!-- REWARDS -->
+            <div id="rewards" class="tab-content">
+
+                <p>Điểm thưởng: <b>320</b></p>
+
+                <button class="btn-red">Đổi quà</button>
+
+            </div>
+
+            <br>
+
+            
+            <form asp-controller="Auth" asp-action="Logout" method="post">
+                <button type="submit" class="btn-red">Đăng xuất</button>
+            </form>
+
+
+        </div>
+        
+        
+
+    </div>
+    <!-- NỘI DUNG -->
+    @RenderBody()
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+
+            <div class="footer-col">
+                <h3>KING POWER GYM</h3>
+
+                <p>📞 1900 633 638</p>
+
+                <p>
+                    📍 52 Thành Thái, Phường Hoà Hưng,<br>
+                    Thành phố Hồ Chí Minh
+                </p>
+
+                <p>
+                    🕒 Thứ Hai - Thứ Sáu: 6:00 đến 23:00<br>
+                    Thứ Bảy - Chủ Nhật: 8:00 đến 22:00
+                </p>
+            </div>
+
+
+            <div class="footer-col">
+
+
+            <h3>MENU</h3>
+
+             <ul class="menu-grid">
+                <li><a href="/Home/Payment#Payment">Phương thức thanh toán</a></li>
+
+                <li><a href="/Services/Index#Services">Dịch vụ</a></li>
+
+                <li><a href="/Price/Index#Price">Chính sách giá</a></li>
+
+                <li><a href="/Home/Privacy#Privacy">Chính sách bảo mật</a></li>
+
+                <li><a href="/Home/Recruit#Recruit">Tuyển dụng</a></li>
+
+                <li><a href="/News/Index#News">Tin tức</a></li>
+
+                <li><a href="/Home/Contact#Contact">Liên hệ</a></li>
+
+                <li><a href="/Club/Index#Club">Câu lạc bộ</a></li>
+            </ul>
+        </div>
+
+            <div class="footer-col">
+                <h3>MẠNG XÃ HỘI</h3>
+
+
+                <div class="social">
+                    <span><a href="https://facebook.com">📘</a></span>
+                    <span><a href="https://instagram.com">📷</a></span>
+                    <span>▶️</span>
+                    <span>🎵</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+
+                        function openProfile(){
+
+                fetch('/Profile/GetProfile')
+                .then(res => res.json())
+                .then(data => {
+
+                    if(data){
+                        document.getElementById("p-name").innerText = data.fullName;
+                        document.getElementById("p-phone").innerText = data.phone;
+                        document.getElementById("p-email").innerText = data.email;
+                        document.getElementById("p-package").innerText = data.packageName ?? "Chưa đăng ký";
+                    }
+
+                    document.getElementById("profileModal").style.display = "flex";
+                });
+            }
+
+            function closeProfile(){
+            document.getElementById("profileModal").style.display="none";
+            }
+
+
+            function showTab(tabId,el){
+
+            let tabs=document.querySelectorAll(".tab-content");
+            tabs.forEach(t=>t.classList.remove("active"));
+
+            document.getElementById(tabId).classList.add("active");
+
+
+            let menus=document.querySelectorAll(".menu-item");
+            menus.forEach(m=>m.classList.remove("active"));
+
+            el.classList.add("active");
+
+            }
+
+            let upload = document.getElementById("uploadAvatar");
+
+            if(upload){
+                upload.onchange = function(e){
+                    let reader = new FileReader();
+
+                    reader.onload = function(){
+                        document.getElementById("avatarPreview").src = reader.result;
+                    }
+
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            }
+
+
+
+            function openLogin(){
+            document.getElementById("loginModal").style.display="flex";
+            }
+
+            function closeLogin(){
+            document.getElementById("loginModal").style.display="none";
+            }
+
+            function showRegister(){
+            document.getElementById("loginForm").style.display="none";
+            document.getElementById("registerForm").style.display="block";
+            }
+
+            function showLogin(){
+            document.getElementById("registerForm").style.display="none";
+            document.getElementById("loginForm").style.display="block";
+            }
+
+    </script>
+    <script>
+            window.onload = function () {
+
+                var error = '@(TempData["Error"] ?? "")';
+
+                if (error !== "") {
+                    document.getElementById("loginModal").style.display = "flex";
+                }
+            }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success text-center">
+            @TempData["Success"]
+        </div>
+    }
+
+</body>
+</html>

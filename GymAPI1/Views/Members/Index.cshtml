@@ -1,0 +1,38 @@
+﻿@model IEnumerable<GymAPI1.Models.Member>
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "DANH SÁCH HỘI VIÊN";
+}
+
+<h2 class="title">@ViewBag.Title</h2>
+<a asp-action="Create" class="btn-add">+ Thêm hội viên mới</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Họ Tên</th>
+            <th>Số Điện Thoại</th>
+            <th>Email</th>
+            <th>Mã Gói Tập</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MemberID</td>
+                <td>@item.FullName</td>
+                <td>@item.Phone</td>
+                <td>@item.Email</td>
+                <td>@item.PackageID</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MemberID" class="btn-edit">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@item.MemberID" class="btn-delete">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

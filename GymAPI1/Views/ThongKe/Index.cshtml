@@ -1,0 +1,42 @@
+﻿@model GymAPI1.Models.ThongKe
+@{
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="~/css/thongke.css" />
+
+<div class="report-container">
+    <h2 style="text-align:center; color:#d32f2f; margin-bottom:30px;">BÁO CÁO CHI TIẾT HỆ THỐNG</h2>
+
+    <div class="summary-cards">
+        <div class="card-item red">
+            HỘI VIÊN <br /> <span style="font-size:24px;">@Model.TongHoiVien</span>
+        </div>
+        <div class="card-item dark">
+            LOẠI GÓI <br /> <span style="font-size:24px;">@Model.TongGoiTap</span>
+        </div>
+        <div class="card-item green">
+            DOANH THU <br /> <span style="font-size:24px;">@Model.TongDoanhThu.ToString("N0") đ</span>
+        </div>
+    </div>
+
+    <h4>DANH SÁCH CHI TIẾT</h4>
+    <table class="detail-table">
+        <thead>
+            <tr>
+                <th>Tên Hội Viên</th>
+                <th>Gói Đang Tập</th>
+                <th>Giá Gói</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.DanhSachHoiVien)
+            {
+                <tr>
+                    <td><b>@item.TenHoiVien</b></td>
+                    <td>@item.TenGoiTap</td>
+                    <td>@item.GiaGoi.ToString("N0") đ</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
